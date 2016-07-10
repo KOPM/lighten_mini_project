@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation=" 
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd 
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+        default-lazy-init="true">
+     
+    <!-- properties文件配置  -->    
+    <context:property-placeholder location="classpath:jdbc.properties" />
+    
+    <!-- 支持注解 -->    
+    <context:annotation-config />
+    
+    <!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+    <context:component-scan base-package="com.tencent.kmpo.*" /><!-- 根据自己的项目修改 -->
+    
+    <!-- 数据源配置,使用应用内的C3P0数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<!-- Connection Info -->
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}" />
+		<property name="user" value="${jdbc.user}" />
+		<property name="password" value="${jdbc.password}" />
+		
+		<!-- Connection Pooling Info -->
+		<property name="maxPoolSize" value="${c3p0.pool.maxPoolSize}" />
+		<property name="minPoolSize" value="${c3p0.pool.minPoolSize}" />
+		<property name="initialPoolSize" value="${c3p0.pool.initialPoolSize}" />
+		<property name="acquireIncrement" value="${c3p0.pool.acquireIncrement}" />
+	</bean>
+	
+	<!-- Spring中Hibernate配置 -->
+	<!-- 用Spring管理Hibernate，
+		  如果使用AnnotationSessionFactoryBean，则在进行Hibernate Reversing Engineering时无法选择Session Factory Id，
+		  因此直接使用其父类LocalSessionFactoryBean
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+	-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+			</props>
+		</property>
+		
+		<!-- 实体类映射 -->
+		<property name="mappingDirectoryLocations">
+			<list> 
+				<value>classpath:/com/tencent/kopm/model</value> 
+			</list>
+		</property>
+		
+	</bean>
+	
+	<!-- Hibernate持久层访问模板配置 -->
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 事务管理器配置 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- 定义注解形式的事务管理   开始  --><!-- 本项目中不采用这种方式 -->
+	<!-- <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/> -->
+	<!-- 定义注解形式的事务管理   结束  -->
+
+	<!-- 使用配置来管理事务   开始 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="add*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="delete**" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>  
+        <aop:pointcut id="affectMethods" expression="execution(* com.tencent.kmpo.service.*.*(..))" />  
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="affectMethods" />  
+    </aop:config>
+    
+    <!-- 使用配置来管理事务   结束 -->
+    
+    <bean id="UserDAO" class="com.tencent.kopm.dao.impl.UserDAOImpl">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean></beans>

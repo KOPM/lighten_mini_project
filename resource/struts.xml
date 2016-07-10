@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.devMode" value="false" /><!-- 开发时为true,应用时为false -->
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+<!-- 	<constant name="struts.multipart.saveDir" value="/tmp/" /> -->
+	
+    <package name="sample" extends="struts-default">
+    	
+    	<!-- 配置Action -->
+    	
+    	<action name="judgeUsernameValid" class="UserLoginAction" method="ajaxUsernameValid">
+    	</action>
+    	
+    	<action name="userSignin" class="UserLoginAction" method="ajaxSignin">
+    	</action>
+    	
+    	<action name="userxLogin" class="UserLoginAction" method="ajaxLogin">
+    	</action>
+    	
+    	<action name="getRankList" class="RankListAction" method="ajaxGetRankList">
+        </action>	  	
+    </package>
+    
+</struts>
