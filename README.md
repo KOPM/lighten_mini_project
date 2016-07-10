@@ -1,4 +1,4 @@
-a web application using leapmotion
+A web application using leapmotion
 
 achieve a simple fight game by our hand to release stress
 
