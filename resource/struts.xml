@@ -20,7 +20,7 @@
     	<action name="userSignin" class="UserLoginAction" method="ajaxSignin">
     	</action>
     	
-    	<action name="userxLogin" class="UserLoginAction" method="ajaxLogin">
+    	<action name="userLogin" class="UserLoginAction" method="ajaxLogin">
     	</action>
     	
     	<action name="getRankList" class="RankListAction" method="ajaxGetRankList">
