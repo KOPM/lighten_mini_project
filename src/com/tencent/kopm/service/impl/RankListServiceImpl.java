@@ -2,6 +2,7 @@ package com.tencent.kopm.service.impl;
 
 import com.tencent.kopm.dao.UserDAO;
 import com.tencent.kopm.model.User;
+import com.tencent.kopm.model.Record;
 import com.tencent.kopm.service.RankListService;
 
 import java.util.List;
@@ -58,36 +59,67 @@ public class RankListServiceImpl implements RankListService {
 		}
 	}
 
-	public List<User> rankList(User user) {
+	public List<Record> rankList(User user) {
 		List<User> userList = (List<User>)getUserDao().findAll();
 		
 		ComparatorUserScore comparator = new ComparatorUserScore();
 		Collections.sort(userList, comparator);
 
-		List<User> rankList = new ArrayList<User>();
+		List<Record> rankList = new ArrayList<Record>();
 		Iterator<User> iter = userList.iterator();
+		int rankCount = 1;
 		while (iter.hasNext() && rankList.size()<rankListMaxSize) {
-			rankList.add(iter.next());
+			User u = iter.next();
+			Record record = new Record(u.getUid(), u.getUsername(), u.getScore(), rankCount++);
+			rankList.add(record);
 		}
 
-
-		if (rankList.contains(user) == false) {
-			int index = userList.indexOf(user);
-			if (rankList.size() > 0) {
-				rankList.remove(rankList.size()-1);
+		boolean hasRecord = false;
+		Iterator<Record> ite = rankList.iterator();
+		while (ite.hasNext()) {
+			if (ite.next().getUsername().equals(user.getUsername())) {
+				hasRecord = true;
+				break;
 			}
-			
-			if (index == userList.size()-1) {
-				rankList.add(userList.get(index));
-				return rankList;
-			}
-			
-			if (rankList.size() > 0) {
-				rankList.remove(rankList.size()-1);
-			}
-			rankList.add(userList.get(index));
-			rankList.add(userList.get(index+1));
 		}
+
+		if (hasRecord) {
+			return rankList;
+		}
+
+		int index = userList.indexOf(user);
+		if (rankList.size() > 0) {
+			rankList.remove(rankList.size()-1);
+		}
+		if (index == userList.size()-1) {
+			rankList.add(new Record(user.getUid(), user.getUsername(), user.getScore(), index+1));
+			return rankList;
+		}
+
+		if (rankList.size() > 0) {
+			rankList.remove(rankList.size()-1);
+		}
+		rankList.add(new Record(user.getUid(), user.getUsername(), user.getScore(), index+1));
+		User u = userList.get(index+1);
+		rankList.add(new Record(u.getUid(), u.getUsername(), u.getScore(), index+2));
+
+		// if (rankList.contains(user) == false) {
+		// 	int index = userList.indexOf(user);
+		// 	if (rankList.size() > 0) {
+		// 		rankList.remove(rankList.size()-1);
+		// 	}
+			
+		// 	if (index == userList.size()-1) {
+		// 		rankList.add(userList.get(index));
+		// 		return rankList;
+		// 	}
+			
+		// 	if (rankList.size() > 0) {
+		// 		rankList.remove(rankList.size()-1);
+		// 	}
+		// 	rankList.add(userList.get(index));
+		// 	rankList.add(userList.get(index+1));
+		// }
 
 		return rankList;
 	}
