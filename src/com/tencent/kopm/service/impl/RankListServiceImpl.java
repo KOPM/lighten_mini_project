@@ -74,16 +74,15 @@ public class RankListServiceImpl implements RankListService {
 			rankList.add(record);
 		}
 
-		boolean hasRecord = false;
+		rankCount = 1;
 		Iterator<Record> ite = rankList.iterator();
 		while (ite.hasNext()) {
 			if (ite.next().getUsername().equals(user.getUsername())) {
-				hasRecord = true;
 				break;
 			}
+			++rankCount;
 		}
-
-		if (hasRecord) {
+		if (rankCount < rankListMaxSize) {
 			return rankList;
 		}
 
