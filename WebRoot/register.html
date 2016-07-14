@@ -41,7 +41,7 @@
       var username = zfJquery('#username')[0].value
       var password = zfJquery('#password')[0].value
       var repassword = zfJquery('#repassword')[0].value
-      if (checkUsername(username) && checkPassword(password) || checkRepassword(password, repassword)) {
+      if (checkUsername(username) && checkPassword(password) && checkRepassword(password, repassword)) {
         var score = localStorage.getItem('score') || 0
         password = md5(password)
         var urlStr = 'http://www.violachen.cn/KOPM/userSignin?userName=' + username + '&passWord=' + password + '&score=' + score

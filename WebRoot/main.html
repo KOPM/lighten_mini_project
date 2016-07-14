@@ -85,7 +85,7 @@
         url: location.href,
         showcount: '1',
         /*是否显示分享总数,显示：'1'，不显示：'0' */
-        desc: '你还记得PM改需求时你崩溃的内心么\n你还记得加班到深夜只为实现一个”简单功能“么\n让我们奋起反抗！\n打倒产品经理！！！\n',
+        desc: '你还记得PM改需求时你崩溃的内心么, \n你还记得加班到深夜只为实现一个”简单功能“么, \n让我们奋起反抗！\n打倒产品经理！！！\n',
         /*默认分享理由(可选)*/
         summary: '',
         /*分享摘要(可选)*/
@@ -112,7 +112,7 @@
         url: location.href,
         showcount: '1',
         /*是否显示分享总数,显示：'1'，不显示：'0' */
-        desc: '你还记得PM改需求时你崩溃的内心么\n你还记得加班到深夜只为实现一个”简单功能“么\n让我们奋起反抗！\n打倒产品经理！！！\n',
+        desc: '你还记得PM改需求时你崩溃的内心么, \n你还记得加班到深夜只为实现一个”简单功能“么, \n让我们奋起反抗！\n打倒产品经理！！！\n',
         /*默认分享理由(可选)*/
         summary: '',
         /*分享摘要(可选)*/
@@ -162,8 +162,13 @@
 
     document.getElementById('logout').addEventListener('click', function(e) {
       zfJquery.ajax({
-        url: 'http://www.violachen.cn/KOPM/cookieLogout',
-        type: 'GET'
+        url: 'http://www.violachen.cn/KOPM/userLogout',
+        type: 'GET',
+        reType: 'text',
+        success: function(){
+        	zf.user = ''
+        	zf.userDOM.innerHTML = ''
+        }
       })
     })
 
