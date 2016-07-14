@@ -8,7 +8,7 @@
     <class name="com.tencent.kopm.model.User" table="user" catalog="kopm">
         <id name="uid" type="integer">
             <column name="uid" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="username" type="string">
             <column name="username" length="50" not-null="true" />
@@ -17,7 +17,7 @@
             <column name="password" length="50" not-null="true" />
         </property>
         <property name="score" type="integer">
-            <column name="score" />
+            <column name="score"/>
         </property>
     </class>
 </hibernate-mapping>

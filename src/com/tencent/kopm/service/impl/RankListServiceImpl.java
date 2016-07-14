@@ -1,8 +1,8 @@
 package com.tencent.kopm.service.impl;
 
 import com.tencent.kopm.dao.UserDAO;
-import com.tencent.kopm.model.User;
 import com.tencent.kopm.model.Record;
+import com.tencent.kopm.model.User;
 import com.tencent.kopm.service.RankListService;
 
 import java.util.List;
@@ -11,7 +11,9 @@ import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
 public class RankListServiceImpl implements RankListService {
@@ -59,7 +61,9 @@ public class RankListServiceImpl implements RankListService {
 		}
 	}
 
+	@Override
 	public List<Record> rankList(User user) {
+		
 		List<User> userList = (List<User>)getUserDao().findAll();
 		
 		ComparatorUserScore comparator = new ComparatorUserScore();
@@ -102,24 +106,7 @@ public class RankListServiceImpl implements RankListService {
 		User u = userList.get(index+1);
 		rankList.add(new Record(u.getUid(), u.getUsername(), u.getScore(), index+2));
 
-		// if (rankList.contains(user) == false) {
-		// 	int index = userList.indexOf(user);
-		// 	if (rankList.size() > 0) {
-		// 		rankList.remove(rankList.size()-1);
-		// 	}
-			
-		// 	if (index == userList.size()-1) {
-		// 		rankList.add(userList.get(index));
-		// 		return rankList;
-		// 	}
-			
-		// 	if (rankList.size() > 0) {
-		// 		rankList.remove(rankList.size()-1);
-		// 	}
-		// 	rankList.add(userList.get(index));
-		// 	rankList.add(userList.get(index+1));
-		// }
-
 		return rankList;
 	}
+	
 }

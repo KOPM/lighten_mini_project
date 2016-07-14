@@ -10,8 +10,9 @@
         default-lazy-init="true">
      
      <!-- 配置KMPO Action -->
-     <bean id="UserLoginAction" class="com.tencent.kopm.action.UserLoginAction">
-     	<property name="userLoginService" ref="UserLoginService"></property>
+     <bean id="UserAction" class="com.tencent.kopm.action.UserAction">
+     	<property name="rankListService" ref="RankListService"></property>
+     	<property name="userService" ref="UserService"></property>
      </bean>
      
      <bean id="RankListAction" class="com.tencent.kopm.action.RankListAction">
@@ -20,7 +21,7 @@
      </bean>
      
      <!-- 配置KMPO Service -->
-     <bean id="UserLoginService" class="com.tencent.kopm.service.impl.UserLoginServiceImpl">
+     <bean id="UserService" class="com.tencent.kopm.service.impl.UserServiceImpl">
         <property name="userDao" ref="UserDAO"></property>
         <property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
@@ -30,8 +31,11 @@
         <property name="sessionFactory" ref="sessionFactory"></property>
      </bean>
      
-     <bean id="UserService" class="com.tencent.kopm.service.impl.UserServiceImpl">
-        <property name="userDao" ref="UserDAO"></property>
-        <property name="sessionFactory" ref="sessionFactory"></property>
-     </bean>
+     <!-- 配置KMPO DAO -->
+     <bean id="UserDAO" class="com.tencent.kopm.dao.impl.UserDAOImpl">
+    	<property name="sessionFactory">
+    		<ref bean="sessionFactory" />
+    	</property>
+    </bean>
+     
 </beans>

@@ -1,0 +1,89 @@
+.container {
+  text-align: center;
+  color: #fff;
+}
+
+h1 {
+  margin-top: 120px;
+  font-size: 46px;
+  text-shadow: 0 0 15px RGBA(39, 46, 251, 1.00);
+}
+
+h4 {
+  font-size: 20px;
+  text-shadow: 0 0 15px RGBA(39, 46, 251, 1.00);
+}
+
+.main {
+  width: 400px;
+  padding-top: 20px;
+  margin: 0 auto;
+}
+
+.account {
+  display: inline-block;
+  border-radius: 20px;
+  background: RGBA(146, 146, 146, 1.00);
+}
+
+.account input {
+  width: 300px;
+  padding: 15px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background: none;
+}
+
+::-moz-placeholder {
+  color: RGBA(89, 89, 89, 1);
+}
+
+::-webkit-input-placeholder {
+  color: RGBA(89, 89, 89, 1);
+}
+
+:-ms-input-placeholder {
+  color: RGBA(89, 89, 89, 1);
+}
+
+.account .username {
+  /*margin: 5px;*/
+  border-bottom: 1px solid RGBA(89, 89, 89, 1);
+}
+
+.foot {
+  width: 400px;
+  padding-top: 20px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+
+.foot .register {
+  float: right;
+  text-decoration: none;
+  color: #fff;
+}
+
+.foot .register:hover {
+  color: rgba(255, 255, 255, .6);
+}
+
+.btn {
+  padding-top: 70px;
+}
+
+button {
+  padding: 16px 80px;
+  font-size: 22px;
+  color: #fff;
+  border: 0;
+  border-radius: 10px;
+  outline: none;
+  background: RGBA(50, 118, 180, 1.00);
+}
+
+button:hover {
+  color: rgba(255, 255, 255, .8);
+  background: RGBA(50, 118, 180, .8);
+}

@@ -93,11 +93,6 @@
         <aop:pointcut id="affectMethods" expression="execution(* com.tencent.kmpo.service.*.*(..))" />  
         <aop:advisor advice-ref="txAdvice" pointcut-ref="affectMethods" />  
     </aop:config>
-    
     <!-- 使用配置来管理事务   结束 -->
-    
-    <bean id="UserDAO" class="com.tencent.kopm.dao.impl.UserDAOImpl">
-    	<property name="sessionFactory">
-    		<ref bean="sessionFactory" />
-    	</property>
-    </bean></beans>
+
+</beans>

@@ -13,18 +13,25 @@
     <package name="sample" extends="struts-default">
     	
     	<!-- 配置Action -->
-    	
-    	<action name="judgeUsernameValid" class="UserLoginAction" method="ajaxUsernameValid">
+
+    	<action name="cookieLogin" class="UserAction" method="ajaxCookieLogin">
     	</action>
     	
-    	<action name="userSignin" class="UserLoginAction" method="ajaxSignin">
+    	<action name="userSignin" class="UserAction" method="ajaxSignin">
     	</action>
     	
-    	<action name="userLogin" class="UserLoginAction" method="ajaxLogin">
+    	<action name="userLogin" class="UserAction" method="ajaxLogin">
     	</action>
     	
-    	<action name="getRankList" class="RankListAction" method="ajaxGetRankList">
-        </action>	  	
+    	<action name="userLogout" class="UserAction" method="ajaxLogout">
+    	</action>
+    	
+    	<action name="saveScore" class="UserAction" method="ajaxSaveScore">
+    	</action>
+    	
+    	<action name="rankList" class="RankListAction" method="ajaxGetRankList">
+        </action>
+  	
     </package>
     
 </struts>

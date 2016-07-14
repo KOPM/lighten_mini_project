@@ -7,21 +7,20 @@ package com.tencent.kopm.model;
 public class User implements java.io.Serializable {
 
 	// Fields
-
 	private Integer uid;
 	private String username;
 	private String password;
 	private Integer score;
 
 	// Constructors
-
 	/** default constructor */
 	public User() {
 	}
-    /** no uid**/
-	public User(String username, String password) {
+    /** no uid constructor **/
+	public User(String username, String password, Integer score) {
 		this.username = username;
 		this.password = password;
+		this.score = score;
 	}
 	/** minimal constructor */
 	public User(Integer uid, String username, String password) {
@@ -39,7 +38,6 @@ public class User implements java.io.Serializable {
 	}
 
 	// Property accessors
-
 	public Integer getUid() {
 		return this.uid;
 	}

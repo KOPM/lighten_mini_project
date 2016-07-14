@@ -7,15 +7,12 @@ package com.tencent.kopm.model;
 public class Record implements java.io.Serializable {
 
 	// Fields
-
 	private Integer uid;
 	private String username;
 	private Integer score;
 	private Integer rank;
 
 	// Constructors
-
-	/** default constructor */
 	public Record() {
 	}
 
@@ -27,7 +24,6 @@ public class Record implements java.io.Serializable {
 	}
 
 	// Property accessors
-
 	public Integer getUid() {
 		return this.uid;
 	}

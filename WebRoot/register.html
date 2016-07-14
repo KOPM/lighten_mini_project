@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>登陆</title>
+  <link rel="stylesheet" href="./css/normalize-zh.css">
+  <link rel="stylesheet" type="text/css" href="./css/login.css">
+</head>
+
+<body>
+  <div id="backgroundNetwork"></div>
+  <div class="container">
+    <header>
+      <h1>打倒产品经理</h1>
+      <h4>让你的情绪得到宣泄</h4>
+    </header>
+    <!-- /header -->
+    <section class="main">
+      <div class="account">
+        <input class="username" id="username" type="text" placeholder="账号">
+        <input class="username" id="password" type="password" placeholder="密码">
+        <input class="password" id="repassword" type="password" placeholder="重复密码">
+      </div>
+      <div class="foot">
+        <a class="register" href="login.html" title="登陆">已有账户，立即登陆</a>
+      </div>
+    </section>
+    <section class="btn">
+      <button id="register">注册</button>
+    </section>
+  </div>
+  <audio src="music/music_cartoony_background.mp3" autoplay="autoplay" loop="loop"></audio>
+  <script type="text/javascript" src="js/lib/md5.js"></script>
+  <script type="text/javascript" src="js/lib/util.js"></script>
+  <script type="text/javascript" src="js/lib/zfJquery.js"></script>
+  <script type="text/javascript">
+  zfJquery(function() {
+    zfJquery('#register').bind('click', function() {
+      var username = zfJquery('#username')[0].value
+      var password = zfJquery('#password')[0].value
+      var repassword = zfJquery('#repassword')[0].value
+      if (checkUsername(username) && checkPassword(password) || checkRepassword(password, repassword)) {
+        var score = localStorage.getItem('score') || 0
+        password = md5(password)
+        var urlStr = 'http://www.violachen.cn/KOPM/userSignin?userName=' + username + '&passWord=' + password + '&score=' + score
+        zfJquery.ajax({
+          url: urlStr,
+          type: 'GET',
+          success: function(data) {
+            if (data == '-1') {
+              alert('用户名注册失败')
+            } else if (data == '1') {
+              localStorage.setItem('from', 'true')
+              window.location.href = 'http://www.violachen.cn/KOPM/main.html'
+            } else {
+              alert('服务器问题')
+            }
+          }
+        })
+      }
+    })
+  })
+  </script>
+</body>
+
+</html>
