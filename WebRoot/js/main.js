@@ -2,7 +2,7 @@ var pillarHeight;
 
 function getSize() {
   var pageWidth = document.documentElement.clientWidth || document.body.clientWidth;
-  var pageHeight = window.innerHeight-50;
+  var pageHeight = document.documentElement.clientHeight || document.body.clientHeight;
 
   var DEFAULT_FACE_WIDTH = 250;
   var DEFAULT_FIST_WIDTH = 200;
@@ -23,7 +23,6 @@ function getSize() {
   cHeight = pageHeight;
   var faceLeft = pageWidth / 2 - faceWidth / 2;
   return {
-    fullWidth: pageWidth,
     faceWidth: faceWidth,
     fistWidth: fistWidth,
     faceLeft: faceLeft,
@@ -56,10 +55,6 @@ function init() {
   pillar.width = oSize.faceWidth;
   pillar.style.left = oSize.faceLeft + "px";
   pillar.style.top = "50px";
-
-  var mainBg = document.getElementById("mainBg");
-  mainBg.width = oSize.fullWidth;
-  mainBg.height = oSize.cHeight;
 }
 
 var i = 0;
